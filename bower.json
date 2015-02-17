@@ -1,0 +1,20 @@
+{
+  "name": "ember_starter",
+  "version": "0.0.0",
+  "authors": [
+    "stevegocoding <stevegocoding@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+  },
+  "dependencies": {
+    "ember": "~1.10.0"
+  }
+}
