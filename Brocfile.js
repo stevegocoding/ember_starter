@@ -4,6 +4,7 @@ var findBowerTrees          = require('broccoli-bower');
 var uglifyJavaScript        = require('broccoli-uglify-js');
 var concatFiles             = require('broccoli-concat');
 var transpileES6            = require('broccoli-es6-module-transpiler');
+var debug                   = require('broccoli-stew').debug;
 
 /** 
  * Build Environment
@@ -35,7 +36,7 @@ var filesToConcat = [
   'jquery/dist/jquery.js'
 ].concat(appTranspiledFile);
 
-console.log(appAndVendorTree);
+// debug(appAndVendorTree, {name: 'test'});
 
 var appJS = concatFiles(appAndVendorTree, {
   inputFiles: filesToConcat,
