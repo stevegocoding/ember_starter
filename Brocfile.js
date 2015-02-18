@@ -21,32 +21,43 @@ var bowerTrees = ['bower_components'];
  **/
 var publicTree = 'public';
 var appTree = 'app/javascripts';
-var appTranspiledFile = 'app_transpiled.js';
 
 // Transpile ES6 to ES5
+// Dont't need module for now
+/*
 var appTranspiledTree = transpileES6(appTree, {
   formatter: 'bundle',
   output: appTranspiledFile,
 });
+*/
 
 // Concat vendor components
-var appAndVendorTree = mergeTrees([appTranspiledTree].concat(bowerTrees));
-var filesToConcat = [
-  'ember/ember.js',
-  'jquery/dist/jquery.js'
-].concat(appTranspiledFile);
+var appAndVendorTree = mergeTrees([appTree].concat(bowerTrees));
 
-// debug(appAndVendorTree, {name: 'test'});
+var appFiles = ['**/*.js'];
+var vendorFiles = null;
+if (env == 'production') {
+  vendorFiles = [
+    'ember/ember.min.js',
+    'jquery/dist/jquery.min.js'
+  ]; 
+}
+else {
+  vendorFiles = [
+    'ember/ember.js',
+    'jquery/dist/jquery.js'
+  ]; 
+}
 
 var appJS = concatFiles(appAndVendorTree, {
-  inputFiles: filesToConcat,
+  inputFiles: appFiles.concat(vendorFiles),
   outputFile: '/app_bundle.js'
 });
 
 if (env === 'production') {
   appJS = uglifyJavaScript(appJS, {
-    mangle: true,
-    compress: true
+    mangle: false,
+    compress: false
   });
 }
 
