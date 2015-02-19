@@ -14,7 +14,7 @@ var env = process.env.BROCCOLI_ENV || 'development';
 /** 
  * Bower Vendors
  **/
-var bowerTrees = ['bower_components'];
+var vendorTree = 'bower_components';
 
 /**
  * Application
@@ -32,26 +32,31 @@ var appTranspiledTree = transpileES6(appTree, {
 */
 
 // Concat vendor components
-var appAndVendorTree = mergeTrees([appTree].concat(bowerTrees));
+//var appAndVendorTree = mergeTrees([appTree].concat(bowerTrees));
 
 var appFiles = ['**/*.js'];
 var vendorFiles = null;
-if (env == 'production') {
+if (env === 'production') {
   vendorFiles = [
-    'ember/ember.min.js',
-    'jquery/dist/jquery.min.js'
+    'jquery/dist/jquery.min.js',
+    'ember/ember.min.js'
   ]; 
 }
 else {
   vendorFiles = [
-    'ember/ember.js',
-    'jquery/dist/jquery.js'
+    'jquery/dist/jquery.min.js',
+    'ember/ember.debug.js'
   ]; 
 }
 
-var appJS = concatFiles(appAndVendorTree, {
-  inputFiles: appFiles.concat(vendorFiles),
+var appJS = concatFiles(appTree, {
+  inputFiles: appFiles,
   outputFile: '/app_bundle.js'
+});
+
+var vendorJS = concatFiles(vendorTree, {
+  inputFiles: vendorFiles,
+  outputFile: '/vendor.js'
 });
 
 if (env === 'production') {
@@ -62,5 +67,6 @@ if (env === 'production') {
 }
 
 appJS = new Funnel(appJS, {destDir: 'js'});
+vendorJS = new Funnel(vendorJS, {destDir: 'js'});
 
-module.exports = mergeTrees([appJS], {overwrite: true});
+module.exports = mergeTrees([appJS, vendorJS], {overwrite: true});

@@ -1,1 +1,1 @@
-console.log('test');
+App = Ember.Application.create({});
