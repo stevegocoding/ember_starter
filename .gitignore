@@ -1,3 +1,6 @@
+.DS_Store
+Homestead/
+vendor/
 bower_components/
 node_modules/
 public/assets/

@@ -1,0 +1,27 @@
+%icon {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit; 
+}
+
+@mixin icon($icon, $size: 1em) {
+  @extend %icon;
+  content: $icon;
+  font-size: $size;
+  line-height: inherit;
+  vertical-align: middle;
+}
+
+@mixin icon-before($icon, $size: 1em, $padding: 0) {
+  &:before {
+    @include icon($icon, $size); 
+    padding-right: $padding;
+  }
+}
+
+@mixin icon-before-color($icon, $size: 1em, $padding: 0, $color: #000) {
+  @include icon-before($icon, $size, $padding);
+  color: $color;
+}
